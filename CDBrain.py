@@ -9,12 +9,12 @@
 # ==========================================================================
 # from utils import *
 from CDEyes import WindowEye
-from CDHands import MouseHand
+from CDHands import KMHand
 
 
 class CDBrain(object):
     w_eye = WindowEye()
-    m_hand = MouseHand()
+    m_hand = KMHand()
 
     def __init__(self):
         pass
