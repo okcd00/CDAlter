@@ -15,12 +15,11 @@ import win32con
 
 class WindowEye(object):
     def __init__(self, window_name=None, handle=None, debug=False):
+        self.debug = debug
         self.window_handle = handle
         if (handle is None) and (window_name is not None):
             self.window_handle = win32gui.FindWindow(
                 None, window_name)
-            if debug:
-                print("{} handle is {}".format(window_name, self.window_handle))
         self.title = win32gui.GetWindowText(self.window_handle)
         self.position = win32gui.GetWindowRect(self.window_handle)
         self.class_name = win32gui.GetClassName(self.window_handle)

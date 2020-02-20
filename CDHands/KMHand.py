@@ -69,9 +69,12 @@ class KMHand(object):
         time.sleep(wait)
         self.click(x, y)
 
-    def sent_key(self):
+    @staticmethod
+    def sent_key(key=None):
+        if key is None:
+            key = win32con.KEYEVENTF_KEYUP
         win32api.keybd_event(13, 0, 0, 0)
-        win32api.keybd_event(13, 0, win32con.KEYEVENTF_KEYUP, 0)
+        win32api.keybd_event(13, 0, key, 0)
 
     def __repr__(self):
         pass
