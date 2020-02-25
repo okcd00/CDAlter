@@ -5,7 +5,7 @@
 #   filename : PUIHand.py
 #   author   : chendian / okcd00@qq.com
 #   date     : 2020-02-19
-#   desc     : Control Keyboard and Mouse with PyUserInput
+#   desc     : Control Keyboard and Mouse with PyUserInput (PyUserInput>=0.1.11)
 #   require  : Linux - Xlib (python-xlib) / Mac - Quartz, AppKit / Windows - pywin32, pyHook
 # ==========================================================================
 import re

@@ -6,10 +6,11 @@
 #   author   : chendian / okcd00@qq.com
 #   date     : 2020-02-19
 #   desc     : Control and make use of all parts.
+#              Only import the packages you need.
 # ==========================================================================
 # from utils import *
-from CDEyes import WindowEye
-from CDHands import KMHand
+from CDEyes.WindowEye import WindowEye
+from CDHands.KMHand import KMHand
 
 
 class CDBrain(object):

@@ -5,7 +5,7 @@
 #   filename : DesktopEye.py
 #   author   : chendian / okcd00@qq.com
 #   date     : 2020-02-19
-#   desc     :
+#   desc     : it needs package Pillow (olefile>=0.46)
 # ==========================================================================
 import os
 import time

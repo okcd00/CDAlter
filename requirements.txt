@@ -1,4 +1,0 @@
-python>=3.6.0
-pywin32>=220
-olefile>=0.46
-PyUserInput>=0.1.11
