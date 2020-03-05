@@ -210,13 +210,24 @@ class PinyinUtils(object):
         # load a dict for jieba as default
         jieba.load_userdict(dic_path)
 
-    def get_segmented_pinyin(self, sentence, segmentor=None, py_transformer=None):
-        if segmentor is None:
-            segmentor = jieba.lcut  # return a list as jieba.cut
-        if py_transformer is None:
-            py_transformer = self.to_pinyin
-        tokens = segmentor(sentence)
-        return list(map(py_transformer, tokens))
+    @staticmethod
+    def segmentation(sentence, segmenter='jieba'):
+        if segmenter is None:
+            return sentence  # do nothing
+        elif segmenter in [True, 'jieba']:
+            segmenter = jieba.lcut  # return a list as jieba.cut
+        elif segmenter in ['others']:
+            # others such as pyltp can be added
+            pass
+        tokens = segmenter(sentence)
+        return tokens
+
+    def to_pinyin_list(self, sentence, segmenter=None):
+        if segmenter is not None:
+            token_list = self.segmentation(sentence, segmenter=segmenter)
+        else:  # char-wise as default
+            token_list = [tok for tok in sentence]
+        return list(map(self.to_pinyin, token_list))
 
     def get_homophones(self, word, n_candidates=5, heteronym=False):
         def _bfs_crawl(nodes):
@@ -256,8 +267,8 @@ class PinyinUtils(object):
                 ret.append(cur_candidate)
         return ret
 
-    def random_modify(self, sentence, mask=None,
-                      n_position=1, n_sample=5, heteronym=True):
+    def _random_modify(self, sentence, mask=None,
+                       n_position=1, n_sample=5, heteronym=True):
         if isinstance(mask, list):
             mask = np.array(mask)
         if mask is None:
@@ -277,7 +288,7 @@ class PinyinUtils(object):
         available_index = np.argwhere(mask).reshape(-1)
         selected_index = np.random.choice(
             available_index, size=n_position, replace=allow_repeat)
-        selected_token = map(lambda x: sentence[x], selected_index)
+        selected_token = list(map(lambda x: sentence[x], selected_index))
         # print(list(zip(selected_index, selected_token)))
         candidates = []
         for token in selected_token:
@@ -292,7 +303,50 @@ class PinyinUtils(object):
             for index, can in zip(selected_index, candidates):
                 cur_sample[index] = np.random.choice(can)
             ret.append(cur_sample)
-        return ret
+        return ret, selected_index
+
+    def random_modify(self, sentence, mask=None, segmenter=None,
+                      n_position=1, n_sample=5, heteronym=True, de_duplication=True):
+        if segmenter:
+            tokens = self.segmentation(
+                sentence=sentence, segmenter=segmenter)
+            # print(tokens)
+            py_list = self.to_pinyin_list(tokens, segmenter=None)
+            mask = [0 if '$' in tok else 1 for tok in py_list]
+        else:  # char-wise or token-wise from sentence
+            tokens = [tok for tok in sentence]
+        sample_list, selected_index = self._random_modify(
+            sentence=tokens, mask=mask,
+            n_position=n_position, n_sample=n_sample, heteronym=heteronym)
+        if de_duplication:
+            samples, records = [], []
+            for sample in sample_list:
+                feature = ''.join(sample)
+                if feature not in records:
+                    samples.append(sample)
+                    records.append(feature)
+            sample_list = samples
+        return sample_list, selected_index
+
+    def generate_parallel_corpus(self, sentence, n_position=1, n_sample=5):
+        original_tokens = self.segmentation(sentence, segmenter='jieba')
+        candidates, selected_index = self.random_modify(
+            sentence=original_tokens,
+            n_position=n_position,
+            n_sample=n_sample)
+
+        def item_formatter(faulty_tokens, is_modified_sign=1):
+            cell_len = faulty_tokens.__len__()
+            faulty_mask = np.zeros(cell_len, dtype=np.int32)
+            for ind in selected_index:
+                faulty_mask[ind] = is_modified_sign
+            _item = {}
+            _item.update({'original_tokens': original_tokens})
+            _item.update({'faulty_tokens': faulty_tokens})
+            _item.update({'faulty_mask': faulty_mask})
+            _item.update({'cell_len': cell_len})
+            return _item
+        return [item_formatter(can) for can in candidates]
 
     def __call__(self, *args, **kwargs):
         pass
@@ -300,7 +354,7 @@ class PinyinUtils(object):
 
 if __name__ == '__main__':
     pu = PinyinUtils()
-    ret = pu.random_modify('金融市场：今日股价上升！')
-    for r in ret:
-        print(''.join(r))
+    ret_sentences = pu.generate_parallel_corpus('金融市场：今日股价上升！', 2, 5)
+    for r in ret_sentences:
+        print(r)
 
