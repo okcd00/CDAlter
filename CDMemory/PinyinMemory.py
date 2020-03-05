@@ -328,8 +328,8 @@ class PinyinUtils(object):
             sample_list = samples
         return sample_list, selected_index
 
-    def generate_parallel_corpus(self, sentence, n_position=1, n_sample=5):
-        original_tokens = self.segmentation(sentence, segmenter='jieba')
+    def generate_parallel_corpus(self, sentence, n_position=1, n_sample=5, segmenter='jieba'):
+        original_tokens = self.segmentation(sentence, segmenter=segmenter)
         candidates, selected_index = self.random_modify(
             sentence=original_tokens,
             n_position=n_position,
@@ -354,7 +354,9 @@ class PinyinUtils(object):
 
 if __name__ == '__main__':
     pu = PinyinUtils()
-    ret_sentences = pu.generate_parallel_corpus('金融市场：今日股价上升！', 2, 5)
+    ret_sentences = pu.generate_parallel_corpus(
+        sentence='金融市场：今日股价上升！',
+        n_position=2, n_sample=5, segmenter=jieba.lcut)
     for r in ret_sentences:
         print(r)
 
