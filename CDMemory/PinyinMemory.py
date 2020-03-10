@@ -1,6 +1,6 @@
 # coding: utf-8
 # ==========================================================================
-#   Copyright (C) 2018 All rights reserved.
+#   Copyright (C) 2020 All rights reserved.
 #
 #   filename : PinyinMemory.py
 #   author   : chendian / okcd00@qq.com
