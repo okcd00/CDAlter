@@ -11,6 +11,7 @@
 import os
 import time
 import wave
+import json
 import _thread
 import pyaudio
 import CDMouth.atc as atc
@@ -27,7 +28,7 @@ class TextToSpeech:
         ":", ";", ",", ".", "?", "!", "\"", "\'", "(", ")"]
 
     def __init__(self):
-        self.delay = 0.456
+        self.delay = 0.450
         self.root_path = '../'
         self.source_dir = os.path.join(
             self.root_path, 'CDMouth', 'syllables/')
@@ -66,18 +67,28 @@ class TextToSpeech:
         sound.export(dest_path, format='wav')
 
     @staticmethod
-    def split_wav(path, syllables=None):
+    def split_wav(path, syllables=None, key='a', debug=False):
+        # syllables in form of [['a1', 'a2', 'a3', 'a4', 'a'], ...]
         file = Path(path)
         if not file.is_file():
             raise Exception(path + " doesn't exist")
+        if syllables is None:
+            data = json.load(open('mapping.json'))
+            syllables = data.get(key)
         sound_file = AudioSegment.from_wav(path)
         audio_chunks = split_on_silence(
             sound_file,
             min_silence_len=333,  # must be silent for at least 333ms
             silence_thresh=-32  # consider it silent if quieter than -32 dBFS
         )
-        if syllables:  # from mapping.json in HanTTS
-            for i, chunk in enumerate(audio_chunks):
+        # from mapping.json in HanTTS
+        for i, chunk in enumerate(audio_chunks):
+            if debug:  # debug mode, ignore syllables list.
+                out_file = "./pre/test{:03}".format(i) + '.wav'
+            elif i >= syllables.__len__():  # over-capacity chunks
+                syllable = 'oth{}'.format(i)
+                out_file = "./pre/" + syllable + '.wav'
+            elif isinstance(syllables[0], list):  # nested list of 5 tones
                 if i // 5 >= syllables.__len__():
                     syllable = 'oth{}'.format(i)
                     out_file = "./pre/" + syllable + '.wav'
@@ -89,8 +100,16 @@ class TextToSpeech:
                         out_file = "./pre/" + syllable + str(j + 1) + ".wav"
                     else:  # neutrual tone
                         out_file = "./pre/" + syllable + ".wav"
-                print("exporting", out_file)
-                chunk.export(out_file, format="wav")
+            else:  # a list of single tones
+                if i >= syllables.__len__():
+                    syllable = 'oth{}'.format(i)
+                    out_file = "./pre/" + syllable + '.wav'
+                else:
+                    syllable = syllables[i]
+                    print(syllable)
+                    out_file = "./pre/" + syllable + ".wav"
+            print("exporting", out_file)
+            chunk.export(out_file, format="wav")
         return audio_chunks
 
     def synthesize(self, text, src, dst):
@@ -148,7 +167,6 @@ class TextToSpeech:
 
             stream.stop_stream()
             stream.close()
-
             p.terminate()
             return
         except Exception as e:
