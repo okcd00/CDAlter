@@ -5,14 +5,14 @@
 #   filename : utils.py
 #   author   : chendian / okcd00@qq.com
 #   date     : 2020-02-19
-#   desc     : utils
+#   desc     : global utils
 # ==========================================================================
 from __future__ import print_function
+from pathlib import Path
 
-import os
-import sys
-import tqdm
+
+PROJECT_PATH = Path.cwd()
 
 
 if __name__ == '__main__':
-    pass
+    print(PROJECT_PATH)

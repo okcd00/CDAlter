@@ -15,9 +15,7 @@ import win32ui
 import win32gui
 import win32con
 from ctypes import windll
-
-
-PROJECT_PATH = '..'
+from utils import PROJECT_PATH
 
 
 def time_identifier(add_postfix=True):

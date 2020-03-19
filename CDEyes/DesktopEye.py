@@ -15,7 +15,8 @@ import win32gui
 import win32api
 import win32con
 from PIL import Image
-from .visual_residue import PROJECT_PATH, see_and_remember
+from utils import PROJECT_PATH
+from .visual_residue import see_and_remember
 
 
 class DesktopEye(object):

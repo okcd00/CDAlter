@@ -85,11 +85,8 @@ class TextToSpeech:
         for i, chunk in enumerate(audio_chunks):
             if debug:  # debug mode, ignore syllables list.
                 out_file = "./pre/test{:03}".format(i) + '.wav'
-            elif i >= syllables.__len__():  # over-capacity chunks
-                syllable = 'oth{}'.format(i)
-                out_file = "./pre/" + syllable + '.wav'
             elif isinstance(syllables[0], list):  # nested list of 5 tones
-                if i // 5 >= syllables.__len__():
+                if i // 5 >= syllables.__len__():  # over-capacity chunks
                     syllable = 'oth{}'.format(i)
                     out_file = "./pre/" + syllable + '.wav'
                 else:
@@ -101,7 +98,7 @@ class TextToSpeech:
                     else:  # neutrual tone
                         out_file = "./pre/" + syllable + ".wav"
             else:  # a list of single tones
-                if i >= syllables.__len__():
+                if i >= syllables.__len__():  # over-capacity chunks
                     syllable = 'oth{}'.format(i)
                     out_file = "./pre/" + syllable + '.wav'
                 else:
@@ -177,4 +174,8 @@ class TextToSpeech:
 if __name__ == '__main__':
     tts = TextToSpeech()
     while True:
-        tts.speak(input('输入中文：'))
+        _t = input('输入中文：')
+        if str(_t).lower().startswith('exit'):
+            break
+        tts.speak(_t)
+
