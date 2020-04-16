@@ -2,25 +2,27 @@ syntax = "proto3";
 
 package keyvaluestore;
 
-// A simple key-value storage service
+// service里预定义服务有哪些函数可以调用
 service KeyValueStore {
-  // Provides a value for each key request
+  // 函数格式： rpc 函数名 (输入变量) returns (输出变量) {}
+  // 变量都要在下面用 message 来定义了才能用
   rpc ask (Key) returns (Response) {}
   rpc remember (Item) returns (Response) {}
 }
 
-// The request message containing the key
+// Key 有一个成员变量，为词典里的键
 message Key {
   string key = 1;
 }
 
-// The request message containing the key and value
+// Item 有两个成员变量，为词典里的键和值
 message Item {
+  // 这个1和2可以当作标识符，有几个变量写到几就好
   string key = 1;
   string value = 2;
 }
 
-// The response message containing the value associated with the key
+// Response 有一个成员变量，为词典里的值
 message Response {
   string value = 1;
 }
