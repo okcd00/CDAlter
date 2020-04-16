@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package keyvaluestore;
+
+// A simple key-value storage service
+service KeyValueStore {
+  // Provides a value for each key request
+  rpc ask (Key) returns (Response) {}
+  rpc remember (Item) returns (Response) {}
+}
+
+// The request message containing the key
+message Key {
+  string key = 1;
+}
+
+// The request message containing the key and value
+message Item {
+  string key = 1;
+  string value = 2;
+}
+
+// The response message containing the value associated with the key
+message Response {
+  string value = 1;
+}

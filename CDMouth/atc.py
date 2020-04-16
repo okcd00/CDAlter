@@ -5,7 +5,7 @@
 #   filename : atc.py
 #   author   : junzew / HanTTS
 #   date     : 2020-03-09
-#   desc     : TTS class
+#   desc     : transforming numbers to chinese for TTS.
 # ==========================================================================
 # Licensed under WTFPL or the Unlicense or CC0.
 # This uses Python 3, but it's easy to port to Python 2 by changing
