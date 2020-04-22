@@ -8,10 +8,11 @@
 #   desc     : global utils
 # ==========================================================================
 from __future__ import print_function
-from pathlib import Path
+import os
 
-
-PROJECT_PATH = Path.cwd()
+# from pathlib import Path
+# PROJECT_PATH = Path.cwd()
+PROJECT_PATH = os.path.dirname(__file__)
 
 
 if __name__ == '__main__':
