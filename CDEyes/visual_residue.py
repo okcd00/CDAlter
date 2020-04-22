@@ -49,14 +49,16 @@ def see_and_remember(handle, position_case=None, debug=False):
     remove_title_bar = 1  # 0
     mem_dc.BitBlt(
         (0, 0), (width, height),
-        img_dc, (left, top), win32con.SRCCOPY)
+        # img_dc, (left, top), win32con.SRCCOPY)
+        img_dc, (0, 0), win32con.SRCCOPY)
     result = windll.user32.PrintWindow(handle, mem_dc.GetSafeHdc(), remove_title_bar)
     if debug:
         print('mem_dc.GetSafeHdc:', result)
 
     # 存入bitmap临时文件
     tmp_path = os.path.join(
-        PROJECT_PATH, 'data', 'tmp', time_identifier())
+        PROJECT_PATH, 'CDMemory', 'pictures', time_identifier())
+    print(PROJECT_PATH)
     if debug:
         print('save source to {}'.format(tmp_path))
     screenshot.SaveBitmapFile(mem_dc, tmp_path)

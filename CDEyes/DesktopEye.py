@@ -8,7 +8,10 @@
 #   desc     : it needs package Pillow (olefile>=0.46)
 # ==========================================================================
 import os
+import sys
 import time
+sys.path.append('./')
+sys.path.append('../')
 
 # main packages
 import win32gui
@@ -16,7 +19,7 @@ import win32api
 import win32con
 from PIL import Image
 from utils import PROJECT_PATH
-from .visual_residue import see_and_remember
+from visual_residue import see_and_remember
 
 
 class DesktopEye(object):
@@ -35,6 +38,21 @@ class DesktopEye(object):
         self.bottom = self.top + self.height
         self.position = (self.left, self.top, self.right, self.bottom)
 
+    @staticmethod
+    def show_all_hwnd():
+        hwnd_title = {}
+
+        def get_all_hwnd(hwnd, mouse):
+            if (win32gui.IsWindow(hwnd)
+                    and win32gui.IsWindowEnabled(hwnd)
+                    and win32gui.IsWindowVisible(hwnd)):
+                hwnd_title.update({hwnd: win32gui.GetWindowText(hwnd)})
+
+        win32gui.EnumWindows(get_all_hwnd, 0)
+        for h, t in hwnd_title.items():
+            if t:
+                print(h, t)
+
     def save_fig(self, image, save_dir=None, postfix='jpg', quality=75):
         form_dict = {
             'jpg': 'JPEG',
@@ -42,7 +60,7 @@ class DesktopEye(object):
         }
         if save_dir is None:
             save_dir = os.path.join(
-                self.project_path, 'data', 'screenshots')
+                self.project_path, 'CDMemory', 'pictures')
         file_path = 'screenshot_{}.{}'.format(
             time.strftime('%y%m%d_%H%M%S', time.localtime()), postfix)
         dump_path = os.path.join(save_dir, file_path)
@@ -69,6 +87,7 @@ class DesktopEye(object):
         else:  # 'window'
             left, top, right, bottom = win32gui.GetWindowRect(handle)
             width, height = right - left, bottom - top
+            # print(left, top, right, bottom)
 
         position_case = (left, top, right, bottom, width, height)
         tmp_path = see_and_remember(handle, position_case)
@@ -120,5 +139,7 @@ class DesktopEye(object):
 
 if __name__ == '__main__':
     de = DesktopEye(True)
-    de.capture(u'最终幻想XIV')
+    # de.capture(u'最终幻想XIV')
+    de.show_all_hwnd()
+    de.capture(u'League of Legends')
 
