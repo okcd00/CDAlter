@@ -17,8 +17,6 @@ from CDHands.PUIHand import PUIHand
 
 
 class BcrAgent(object):
-    last_time = time.time()
-    next_time = time.time()
     cur_gap = 9
 
     def __init__(self):
@@ -26,6 +24,8 @@ class BcrAgent(object):
         self.eye.set_foreground()
         print('Init finished. window at', self.eye.coordinate())
         self.hand = PUIHand()
+        self.last_time = self.get_time()
+        self.next_time = self.get_time()
 
     @staticmethod
     def get_time():
@@ -48,18 +48,18 @@ class BcrAgent(object):
     def press(self, keys=None):
         if keys is None:
             keys = ['u']
+        self.eye.set_foreground()
         self.hand.keyboard.press_keys(keys)
 
     def use_ticket(self):
         # record begin time for 'use'
         # actual hit time is 1s after.
-        self.eye.set_foreground()
         self.last_time = self.get_time()
         self.press(['u'])  # use
         time.sleep(1)
         self.press(['o'])  # ok
-        time.sleep(1)
-        self.press(['s'])  # finish, click side
+        time.sleep(3)
+        self.press(['s'])  # finish, click ok
         return self.last_time
 
     def change_gap(self):
@@ -68,10 +68,10 @@ class BcrAgent(object):
         self.cur_gap = 10 + sign
 
     def refresh_next_time(self):
-        self.next_time = self.last_time + self.cur_gap
+        if self.next_time is None:
+            self.next_time = self.last_time + self.cur_gap
         while self.next_time < self.get_time() + 2:
             self.next_time += self.cur_gap
-            break
 
     def wrong_refresh(self):
         # receive error command
