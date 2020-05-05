@@ -41,6 +41,7 @@ class BcrAgent(object):
         cur_time = self.get_time()
         self.refresh_next_time()
         print(
+            self.show_time(self.last_time), '<-',
             self.show_time(cur_time), '->',
             self.show_time(self.next_time))
         return cur_time
@@ -64,12 +65,10 @@ class BcrAgent(object):
 
     def change_gap(self):
         # 9 -> 11 or 11 -> 9
-        sign = 10 - self.cur_gap
-        self.cur_gap = 10 + sign
+        self.cur_gap = 20 - self.cur_gap
 
     def refresh_next_time(self):
-        if self.next_time is None:
-            self.next_time = self.last_time + self.cur_gap
+        self.next_time = self.last_time + self.cur_gap
         while self.next_time < self.get_time() + 2:
             self.next_time += self.cur_gap
 
@@ -77,11 +76,11 @@ class BcrAgent(object):
         # receive error command
         self.last_time -= self.cur_gap
         self.change_gap()
-        self.last_time += self.cur_gap
         self.refresh_next_time()
 
     def click_thread(self):
         self.use_ticket()
+        self.report_time()
         while True:
             cur_time = self.get_time()
             if cur_time > self.next_time:
@@ -95,8 +94,12 @@ class BcrAgent(object):
     def read_feedback(self):
         while True:
             feedback = input("If no drop, press y and enter.\n")
-            if feedback.strip():
+            inp = feedback.strip()
+            if inp:  # in case of faulty touch
+                if feedback.startswith('end'):
+                    return  # in case of dead-loop
                 self.wrong_refresh()
+                print("Gap switched.")
                 self.report_time()
 
     def __call__(self, *args, **kwargs):
