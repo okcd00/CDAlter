@@ -102,11 +102,16 @@ class BcrAgent(object):
                 print("Gap switched.")
                 self.report_time()
 
+    def restart(self):
+        self.thread1.start()
+        self.thread2.start()
+        self.__call__()
+
     def __call__(self, *args, **kwargs):
-        t1 = threading.Thread(target=self.click_thread)
-        t2 = threading.Thread(target=self.read_feedback)
-        t1.start()
-        t2.start()
+        self.thread1 = threading.Thread(target=self.click_thread)
+        self.thread2 = threading.Thread(target=self.read_feedback)
+        self.thread1.start()
+        self.thread2.start()
 
 
 if __name__ == '__main__':
