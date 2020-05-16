@@ -46,7 +46,7 @@ class PUIHand(object):
         return self.keyboard.release_key(key)
 
     def tap_key(self, key, times=1, interval=1):
-        # 按住并松开，tap一个键
+        # press and release
         self.keyboard.tap_key(key, n=times, interval=interval)
 
     def tap_comb(self, key, times, comb='ctrl'):
@@ -62,6 +62,6 @@ class PUIHand(object):
 
 
 if __name__ == '__main__':
-    # Windows系统
+    # Windows System
     ph = PUIHand()
     ph.keyboard.press_keys(['d'])

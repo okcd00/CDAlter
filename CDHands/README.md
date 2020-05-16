@@ -10,3 +10,6 @@ Try to apply some simple executions by win32 or shell, etc.
     + `pywin32>=220`
 + PUIHand.py
     + `PyUserInput>=0.1.11` for PyMouse and PyKeyboard
++ PackingHand.py
+    + `pyinstaller>=3.6`
+    + `pip install https://github.com/pyinstaller/pyinstaller/archive/develop.zip`
