@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf-8 -*-
 # ==========================================================================
 #   Copyright (C) since 2020 All rights reserved.
 #
@@ -8,9 +8,11 @@
 #   desc     : basic wxPython Frame
 # ==========================================================================
 import wx
+import wx.lib.buttons as buttons
 
 
 class BaseFrame(wx.Frame):
+    app = wx.App()
     """
     A Frame that says Hello World
     """
@@ -26,7 +28,7 @@ class BaseFrame(wx.Frame):
 
         # and a status bar
         self.CreateStatusBar()
-        self.SetStatusText("这是一个测试用的Python GUI程序")
+        self.SetStatusText("This is a testing Python GUI program")
 
     def init_icon(self):
         icon = wx.Icon('res/cd_16x16.ico', wx.BITMAP_TYPE_ICO, 16, 16)
@@ -35,36 +37,53 @@ class BaseFrame(wx.Frame):
 
     def init_basic_panel(self):
         # create a panel in the frame
-        panel = wx.Panel(self)
+        panel = wx.Panel(self, -1)
+
+        # create a sizer to manage the layout of child widgets
+        sizer = wx.BoxSizer(wx.VERTICAL)
 
         # put some text with a larger bold font on it
         default_label = "CDPlayer's Base Frame"
+        st = self.add_text(text=default_label, parent=panel)
+        sizer.Add(st, wx.SizerFlags().Border(wx.TOP | wx.LEFT, 25))
+
+        self.button = wx.Button(panel, -1, "Click", pos=(50, 80))
+        self.Bind(wx.EVT_BUTTON, self.on_click, self.button)
+        self.button.SetDefault()
+
+        panel.SetSizer(sizer)
+
+    def add_text(self, text, parent, point_size=5):
+        # put some text with a larger bold font on it
+        default_label = text
         st = wx.StaticText(
-            parent=panel,
+            parent=parent,
             label=default_label)
         font = st.GetFont()
-        font.PointSize += 10
+        font.PointSize += point_size
         font = font.Bold()
         st.SetFont(font)
+        return st
 
-        # and create a sizer to manage the layout of child widgets
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(st, wx.SizerFlags().Border(wx.TOP | wx.LEFT, 25))
-        panel.SetSizer(sizer)
+    def add_hello_item(self, file_menu):
+        # The "\t..." syntax defines an accelerator key that also triggers
+        # the same event
+        hello_item = file_menu.Append(
+            -1, "&娴嬭瘯",
+            "Test MessageBox.")
+        self.Bind(wx.EVT_MENU, self.on_hello, hello_item)
+
+    def add_exit_item(self, file_menu):
+        # When using a stock ID we don't need to specify the menu item's label
+        exit_item = file_menu.Append(id=wx.ID_EXIT)
+        self.Bind(wx.EVT_MENU, self.on_exit, exit_item)
 
     def make_file_menu(self):
         # Make a file menu with Hello and Exit items
         file_menu = wx.Menu()
-        # The "\t..." syntax defines an accelerator key that also triggers
-        # the same event
-        hello_item = file_menu.Append(
-            -1, "&测试",
-            "测试菜单的弹出消息框效果")
+        self.add_hello_item(file_menu)
         file_menu.AppendSeparator()
-        # When using a stock ID we don't need to specify the menu item's label
-        exit_item = file_menu.Append(id=wx.ID_EXIT)
-        self.Bind(wx.EVT_MENU, self.on_hello, hello_item)
-        self.Bind(wx.EVT_MENU, self.on_exit, exit_item)
+        self.add_exit_item(file_menu)
         return file_menu
 
     def make_help_menu(self):
@@ -80,15 +99,15 @@ class BaseFrame(wx.Frame):
         when the menu item is selected.
         """
         self.menu_bar = wx.MenuBar()
-        file_menu = self.make_file_menu()
-        help_menu = self.make_help_menu()
+        self.file_menu = self.make_file_menu()
+        self.help_menu = self.make_help_menu()
 
         # Make the menu bar and add the two menus to it. The '&' defines
         # that the next letter is the "mnemonic" for the menu item. On the
         # platforms that support it those letters are underlined and can be
         # triggered from the keyboard.
-        self.menu_bar.Append(menu=file_menu, title="&文件")
-        self.menu_bar.Append(menu=help_menu, title="&帮助")
+        self.menu_bar.Append(menu=self.file_menu, title="&File")
+        self.menu_bar.Append(menu=self.help_menu, title="&Help")
 
         # Give the menu bar to the frame
         self.SetMenuBar(self.menu_bar)
@@ -96,26 +115,28 @@ class BaseFrame(wx.Frame):
     def on_exit(self, event):
         """Close the frame, terminating the application."""
         self.Close(True)
-        app.ExitMainLoop()
+        self.app.ExitMainLoop()
 
     def on_hello(self, event):
         """Say hello to the user."""
-        wx.MessageBox("测试成功，弹窗展示MessageBox")
+        wx.MessageBox("Success, This is the MessageBox")
+
+    def on_click(self, event):
+        self.button.SetLabel("Clicked")
 
     def on_about(self, event):
         """Display an About Dialog"""
-        wx.MessageBox("这是一个尝试用 wxPython 来实现 GUI 的测试程序",
+        wx.MessageBox("This is a testing GUI program by wxPython",
                       "Copyright by okcd00.",
                       wx.OK | wx.ICON_INFORMATION)
 
     def start(self):
         self.Show()
-        app.MainLoop()
+        self.app.MainLoop()
 
 
 if __name__ == '__main__':
     # When this module is run (not imported) then create the app, the
     # frame, show it, and start the event loop.
-    app = wx.App()
     frm = BaseFrame(None, title='CDPlayer\'s Hello-world')
     frm.start()
