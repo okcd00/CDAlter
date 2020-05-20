@@ -16,6 +16,8 @@ from CDNerve.BaseFrame import *
 class MyFrame(BaseFrame):
     def __init__(self, *args, **kw):
         super(MyFrame, self).__init__(*args, **kw)
+        self.random_number = -1
+        self.SetStatusText("This is a CrackMe Program made by CDPlayer.")
 
     def init_icon(self):
         icon = wx.Icon('cd_16x16.ico', wx.BITMAP_TYPE_ICO, 16, 16)
@@ -53,17 +55,12 @@ class MyFrame(BaseFrame):
 
     def on_rd_click(self, event):
         # number_for_hack
-        numbers = random.randint(0, 9999)
-        rd_str = ' '.join([d for d in '{:04}'.format(numbers)])
+        self.random_number = random.randint(0, 9999)
+        rd_str = ' '.join([d for d in '{:04}'.format(self.random_number)])
         self.random_text.SetLabel(rd_str)
 
     def on_sm_click(self, event):
-        cur_string = self.random_text.GetLabel()
-        cur_number = -1
-        if cur_string.isdigit():
-            cur_number = int(cur_string.replace(' ', ''))
-
-        if cur_number == 622:  # or True:
+        if self.random_number == 622:  # or True:
             self.random_text.GetFont().PointSize -= 5
             self.random_text.SetLabel('Something abnormal happened.')
             self.file_menu.Remove(self.file_menu.GetMenuItems()[0])
