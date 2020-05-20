@@ -79,5 +79,5 @@ def packing(python_path):
 # packing('./bcr_time_counter.py')
 print(sys.version)
 sys.stdout = open('../data/tmp/packing.log', 'w')
-packing('../examples/gui_trail.py')
+packing('../examples/kari_crackme.py')
 
