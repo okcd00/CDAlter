@@ -24,6 +24,8 @@ class BcrAgent(object):
         self.eye.set_foreground()
         print('Init finished. window at', self.eye.coordinate())
         self.hand = PUIHand()
+        self.thread1 = threading.Thread(target=self.click_thread)
+        self.thread2 = threading.Thread(target=self.read_feedback)
         self.last_time = self.get_time()
         self.next_time = self.get_time()
 
@@ -108,8 +110,6 @@ class BcrAgent(object):
         self.__call__()
 
     def __call__(self, *args, **kwargs):
-        self.thread1 = threading.Thread(target=self.click_thread)
-        self.thread2 = threading.Thread(target=self.read_feedback)
         self.thread1.start()
         self.thread2.start()
 
