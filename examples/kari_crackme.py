@@ -10,7 +10,8 @@
 import sys
 sys.path.append('../')
 import random
-from CDNerve.BaseFrame import *
+import wx.lib.buttons as buttons
+from CDNerve.BaseFrame import wx, BaseFrame
 
 
 class MyFrame(BaseFrame):

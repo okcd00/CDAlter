@@ -6,7 +6,9 @@ Mainly for TTS applications.
 
 > 处理、播放 `.wav` 音频文件
 + [pydub](https://github.com/jiaaro/pydub)
+    + `pydub>=0.24.1` 
 + [pyAudio](https://people.csail.mit.edu/hubert/pyaudio/)
+    + `pyaudio>=0.2.11` 
 + [ffmpeg](https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-20200309-608b8a8-win64-static.zip)
   + [win32/static](https://ffmpeg.zeranoe.com/builds/win32/static/)
   + [win64/static](https://ffmpeg.zeranoe.com/builds/win64/static/)

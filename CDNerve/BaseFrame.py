@@ -8,7 +8,6 @@
 #   desc     : basic wxPython Frame
 # ==========================================================================
 import wx
-import wx.lib.buttons as buttons
 
 
 class BaseFrame(wx.Frame):
