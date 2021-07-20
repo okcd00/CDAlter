@@ -90,5 +90,5 @@ class ReadEye(object):
 
 
 if __name__ == '__main__':
-    re = ReadEye()
-    print(re)
+    rde = ReadEye()
+    print(rde)

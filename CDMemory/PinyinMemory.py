@@ -222,6 +222,10 @@ class PinyinUtils(object):
         tokens = segmenter(sentence)
         return tokens
 
+    @staticmethod
+    def sentence_pinyin(sent):
+        return pypinyin.lazy_pinyin(sent, errors=lambda item: [c for c in item])
+
     def to_pinyin_list(self, sentence, segmenter=None):
         if segmenter is not None:
             token_list = self.segmentation(sentence, segmenter=segmenter)

@@ -28,4 +28,6 @@ Automatically do something, because okcd00 is lazy.
   + release programs.
   + temporary files.
 + examples
-  + keyboard scripts for BCR's auto fighting.
+  + `hello_world` the pure toy script.
+  + `bcr_time_counter` keyboard scripts for BCR's auto fighting.
+  + `typist` keyboard scripts for auto-typing sentences in notepad.

@@ -49,7 +49,7 @@ class PUIHand(object):
         # press and release
         self.keyboard.tap_key(key, n=times, interval=interval)
 
-    def tap_comb(self, key, times, comb='ctrl'):
+    def tap_comb(self, key, times=1, comb='ctrl'):
         comb_dict = {
             'ctrl': self.keyboard.control_key,
             'alt': self.keyboard.alt_key,
