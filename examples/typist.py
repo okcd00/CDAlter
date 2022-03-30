@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf-8 -*-
 # ==========================================================================
 #   Copyright (C) since 2021 All rights reserved.
 #
@@ -11,6 +11,7 @@ import re
 import sys
 import time
 
+sys.path.append('./')
 sys.path.append('../')
 from CDEyes.WindowEye import WindowEye
 from CDHands.PUIHand import PUIHand
@@ -20,38 +21,38 @@ from CDMemory.PinyinMemory import PinyinUtils
 
 SIGN2IS_TABLE = {
     '!': 'shift+1',
-    '£°': 'shift+1',
+    'ÔºÅ': 'shift+1',
     '@': 'shift+2',
     '#': 'shift+3',
     '$': 'shift+4',
-    '£§': 'shift+4',
+    'Ôø•': 'shift+4',
     '%': 'shift+5',
     '^': 'shift+6',
-    '°≠': 'shift+6',
+    '‚Ä¶‚Ä¶': 'shift+6',
     '&': 'shift+7',
     '*': 'shift+8',
     '(': 'shift+9',
-    '£®': 'shift+9',
+    'Ôºà': 'shift+9',
     ')': 'shift+0',
-    '£©': 'shift+0',
+    'Ôºâ': 'shift+0',
 }
 
-SIGH_CHN2ENG = {
-    '£°': '!',
-    '£§': '$',
-    '£®': '(',
-    '£©': ')',
-    '£∫': ':',
-    '£¨': ',',
-    '°£': '.',
-    '°≠°≠': '^',
+SIGN_CHN2ENG = {
+    'ÔºÅ': '!',
+    'Ôø•': '$',
+    'Ôºà': '(',
+    'Ôºâ': ')',
+    'Ôºö': ':',
+    'Ôºå': ',',
+    '„ÄÇ': '.',
+    '‚Ä¶‚Ä¶': '^',
 }
 
 
 class TypistAgent(object):
     def __init__(self, debug=False):
         self.debug = debug
-        self.window_eye = WindowEye(window_name=u'Œﬁ±ÍÃ‚ - º« ¬±æ', debug=True)
+        self.window_eye = WindowEye(window_name=u'new 1 - Notepad++', debug=True)
         self.window_eye.set_foreground()
         print('Init finished. window at', self.window_eye.coordinate())
         self.typing_hand = PUIHand()
@@ -76,7 +77,7 @@ class TypistAgent(object):
             print(input_sequence)
             print(seg_indexes)
         for idx, inp_c in enumerate(input_sequence):
-            inp_c = SIGH_CHN2ENG.get(inp_c, inp_c)
+            inp_c = SIGN_CHN2ENG.get(inp_c, inp_c)
             """
             if inp_c in SIGN2IS_TABLE:
                 _comb, _key = SIGN2IS_TABLE[inp_c].split('+')
@@ -94,5 +95,5 @@ class TypistAgent(object):
 if __name__ == '__main__':
     ta = TypistAgent(debug=True)
     time.sleep(1)
-    ta.type_sentence('—Ó«Â∆ΩÀµ£∫ΩÒÃÏµƒÃÏ∆¯£¨ªπ≤ª¥Ì£°123546°£Œ¥ÕÍ¥˝–¯£ª')
+    ta.type_sentence('‰ªäÂ§©Â§©Ê∞îÂ•ΩÊô¥ÊúóÔºÅ123456 bad appleÔºü')
     pass

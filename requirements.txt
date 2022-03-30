@@ -1,1 +1,6 @@
+Pinyin2Hanzi
 pyautogui
+pypinyin
+PyUserInput
+pywin32
+pyyaml
