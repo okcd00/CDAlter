@@ -62,7 +62,7 @@ class TypistAgent(object):
     def load_document(self, txt_path):
         self.read_eye.read(txt_path)
 
-    def type_sentence(self, chinese_text):
+    def type_sentence(self, chinese_text, sleep_time=0.25):
         input_sequence = self.pinyin_memo.sentence_pinyin(chinese_text)
         segments = self.pinyin_memo.segmentation(chinese_text)
         seg_indexes = [0]
@@ -89,7 +89,7 @@ class TypistAgent(object):
             if idx in seg_indexes:
                 self.typing_hand.type(' ')
             self.typing_hand.type(inp_c)
-            time.sleep(0.25)
+            time.sleep(sleep_time)
 
 
 if __name__ == '__main__':

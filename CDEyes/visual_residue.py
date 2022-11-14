@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf8 -*-
 # ==========================================================================
 #   Copyright (C) since 2020 All rights reserved.
 #
@@ -25,7 +25,7 @@ def time_identifier(add_postfix=True):
     return t_id + ('.bmp' if add_postfix else '')
 
 
-def see_and_remember(handle, position_case=None, debug=False):
+def see_and_remember(handle, position_case=None, remove_title_bar=True, dir_path=None, debug=False):
     # position and size
     if position_case:
         left, top, right, bottom, width, height = position_case
@@ -33,20 +33,20 @@ def see_and_remember(handle, position_case=None, debug=False):
         left, top, right, bottom = win32gui.GetWindowRect(handle)
         width, height = right - left, bottom - top
 
-    # ´´½¨Éè±¸ÃèÊö±í
+    # åˆ›å»ºè®¾å¤‡æè¿°è¡¨
     desktop_dc = win32gui.GetWindowDC(handle)
     img_dc = win32ui.CreateDCFromHandle(desktop_dc)
 
-    # ´´½¨ÄÚ´æÉè±¸ÃèÊö±í
+    # åˆ›å»ºå†…å­˜è®¾å¤‡æè¿°è¡¨
     mem_dc = img_dc.CreateCompatibleDC()
 
-    # ´´½¨Î»Í¼¶ÔÏó
+    # åˆ›å»ºä½å›¾å¯¹è±¡
     screenshot = win32ui.CreateBitmap()
     screenshot.CreateCompatibleBitmap(img_dc, width, height)
     mem_dc.SelectObject(screenshot)
 
-    # ½ØÍ¼ÖÁÄÚ´æÉè±¸ÃèÊö±í
-    remove_title_bar = 1  # 0
+    # æˆªå›¾è‡³å†…å­˜è®¾å¤‡æè¿°è¡¨
+    remove_title_bar = int(remove_title_bar)
     mem_dc.BitBlt(
         (0, 0), (width, height),
         # img_dc, (left, top), win32con.SRCCOPY)
@@ -55,16 +55,20 @@ def see_and_remember(handle, position_case=None, debug=False):
     if debug:
         print('mem_dc.GetSafeHdc:', result)
 
-    # ´æÈëbitmapÁÙÊ±ÎÄ¼ş
-    tmp_path = os.path.join(
-        PROJECT_PATH, 'CDMemory', 'pictures', time_identifier())
-    print(PROJECT_PATH)
+    # å­˜å…¥bitmapä¸´æ—¶æ–‡ä»¶
+    if dir_path is None:
+        tmp_path = os.path.join(
+            PROJECT_PATH, 'CDMemory', 'pictures', time_identifier())
+        # print(PROJECT_PATH)
+    else:
+        tmp_path = os.path.join(dir_path, time_identifier())
+
     if debug:
         print('save source to {}'.format(tmp_path))
     screenshot.SaveBitmapFile(mem_dc, tmp_path)
     # bmp_str = screenshot.GetBitmapBits(True)
 
-    # ÄÚ´æÊÍ·Å
+    # å†…å­˜é‡Šæ”¾
     win32gui.DeleteObject(screenshot.GetHandle())
     mem_dc.DeleteDC()
     img_dc.DeleteDC()

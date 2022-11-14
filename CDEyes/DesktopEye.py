@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf8 -*-
 # ==========================================================================
 #   Copyright (C) since 2020 All rights reserved.
 #
@@ -90,7 +90,7 @@ class DesktopEye(object):
             # print(left, top, right, bottom)
 
         position_case = (left, top, right, bottom, width, height)
-        tmp_path = see_and_remember(handle, position_case)
+        tmp_path = see_and_remember(handle, position_case, remove_title_bar=False)
         return tmp_path
 
     def screenshot(self, save_dir=None, postfix='jpg', quality=75):
@@ -98,7 +98,7 @@ class DesktopEye(object):
         tmp_path = self._get_screenshot(self.desktop, method='desktop')
         image, valid_flag = self.load_fig(tmp_path)
 
-        # ½«½ØÍ¼±£´æµ½ÎÄ¼şÖĞ
+        # å°†æˆªå›¾ä¿å­˜åˆ°æ–‡ä»¶ä¸­
         if postfix.lower() != 'bmp':
             self.save_fig(
                 image=image, save_dir=save_dir,
@@ -139,7 +139,7 @@ class DesktopEye(object):
 
 if __name__ == '__main__':
     de = DesktopEye(True)
-    # de.capture(u'×îÖÕ»ÃÏëXIV')
+    # de.capture(u'æœ€ç»ˆå¹»æƒ³XIV')
     de.show_all_hwnd()
-    de.capture(u'League of Legends')
+    de.capture(u'*new 1 - Notepad++')
 

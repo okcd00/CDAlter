@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf8 -*-
 # ==========================================================================
 #   Copyright (C) since 2020 All rights reserved.
 #
@@ -68,21 +68,21 @@ class WindowEye(object):
 
     def appear(self, handle=None):
         """
-        # SW_HIDE�����ش��ڲ������������ڡ�nCmdShow=0��
-        # SW_MAXIMIZE�����ָ���Ĵ��ڡ�nCmdShow=3��
-        # SW_MINIMIZE����С��ָ���Ĵ��ڲ��Ҽ�����Z���е���һ�����㴰�ڡ�nCmdShow=6��
-        # SW_RESTORE�������ʾ���ڡ����������С������󻯣���ϵͳ�����ڻָ���ԭ���ĳߴ��λ�á�
-            �ڻָ���С������ʱ��Ӧ�ó���Ӧ��ָ�������־��nCmdShow=9��
-        # SW_SHOW���ڴ���ԭ����λ����ԭ���ĳߴ缤�����ʾ���ڡ�nCmdShow=5��
-        # SW_SHOWDEFAULT��������STARTUPINFO�ṹ��ָ����SW_FLAG��־�趨��ʾ״̬��
-            STARTUPINFO �ṹ��������Ӧ�ó���ĳ��򴫵ݸ�CreateProcess�����ġ�nCmdShow=10��
-        # SW_SHOWMAXIMIZED������ڲ�������󻯡�nCmdShow=3��
-        # SW_SHOWMINIMIZED������ڲ�������С����nCmdShow=2��
-        # SW_SHOWMINNOACTIVE��������С�����������Ȼά�ּ���״̬��nCmdShow=7��
-        # SW_SHOWNA���Դ���ԭ����״̬��ʾ���ڡ��������Ȼά�ּ���״̬��nCmdShow=8��
-        # SW_SHOWNOACTIVATE���Դ������һ�εĴ�С��״̬��ʾ���ڡ��������Ȼά�ּ���״̬��nCmdShow=4��
-        # SW_SHOWNORMAL�������ʾһ�����ڡ�������ڱ���С������󻯣�ϵͳ����ָ���ԭ���ĳߴ�ʹ�С��
-            Ӧ�ó����ڵ�һ����ʾ���ڵ�ʱ��Ӧ��ָ���˱�־��nCmdShow=1��
+        # SW_HIDE：隐藏窗口并激活其他窗口。nCmdShow=0。
+        # SW_MAXIMIZE：最大化指定的窗口。nCmdShow=3。
+        # SW_MINIMIZE：最小化指定的窗口并且激活在Z序中的下一个顶层窗口。nCmdShow=6。
+        # SW_RESTORE：激活并显示窗口。如果窗口最小化或最大化，则系统将窗口恢复到原来的尺寸和位置。
+            在恢复最小化窗口时，应用程序应该指定这个标志。nCmdShow=9。
+        # SW_SHOW：在窗口原来的位置以原来的尺寸激活和显示窗口。nCmdShow=5。
+        # SW_SHOWDEFAULT：依据在STARTUPINFO结构中指定的SW_FLAG标志设定显示状态，
+            STARTUPINFO 结构是由启动应用程序的程序传递给CreateProcess函数的。nCmdShow=10。
+        # SW_SHOWMAXIMIZED：激活窗口并将其最大化。nCmdShow=3。
+        # SW_SHOWMINIMIZED：激活窗口并将其最小化。nCmdShow=2。
+        # SW_SHOWMINNOACTIVE：窗口最小化，激活窗口仍然维持激活状态。nCmdShow=7。
+        # SW_SHOWNA：以窗口原来的状态显示窗口。激活窗口仍然维持激活状态。nCmdShow=8。
+        # SW_SHOWNOACTIVATE：以窗口最近一次的大小和状态显示窗口。激活窗口仍然维持激活状态。nCmdShow=4。
+        # SW_SHOWNORMAL：激活并显示一个窗口。如果窗口被最小化或最大化，系统将其恢复到原来的尺寸和大小。
+            应用程序在第一次显示窗口的时候应该指定此标志。nCmdShow=1。
         """
         if win32gui.IsIconic(handle):
             win32gui.ShowWindow(handle, win32con.SW_SHOWNORMAL)
@@ -97,8 +97,7 @@ class WindowEye(object):
 
 
 if __name__ == '__main__':
-    # we = WindowEye(window_name=u'���ջ���XIV', debug=False)
-    we = WindowEye(window_name=u'΢��', debug=True)
+    # we = WindowEye(window_name=u'最终幻想XIV', debug=False)
+    we = WindowEye(window_name=u'*new 1 - Notepad++', debug=True)
     print(we.coordinate())
     we.set_foreground()
-
