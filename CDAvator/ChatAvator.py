@@ -7,9 +7,9 @@ from typing import Optional
 from collections import defaultdict
 from os import environ, getenv
 
+openai_chat_api = "https://api.openai.com/v1/chat/completions"
 openai_key = environ['OPENAI_KEY'] # can be found in chatgpt/ai/api_test.ipynb
 proxy = getenv('OPENAI_PROXY')
-proxy = 'socks5://127.0.0.1:1081'
 # proxy = 'socks5://100.64.0.15:11081'
 # proxy = 'socks5://100.64.0.42:7890'
 
