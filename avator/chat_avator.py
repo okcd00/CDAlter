@@ -13,6 +13,8 @@ proxy = getenv('OPENAI_PROXY')
 # proxy = 'socks5://100.64.0.15:11081'
 # proxy = 'socks5://100.64.0.42:7890'
 
+openai_key = ""
+proxy = 'socks5://127.0.0.1:1081'
 
 headers = {
     "Authorization": f"Bearer {openai_key}"

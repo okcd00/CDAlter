@@ -19,9 +19,10 @@ class WindowEye(object):
         if (handle is None) and (window_name is not None):
             self.window_handle = win32gui.FindWindow(
                 None, window_name)
-        self.title = win32gui.GetWindowText(self.window_handle)
-        self.position = win32gui.GetWindowRect(self.window_handle)
-        self.class_name = win32gui.GetClassName(self.window_handle)
+        if self.window_handle is not None:
+            self.title = win32gui.GetWindowText(self.window_handle)
+            self.position = win32gui.GetWindowRect(self.window_handle)
+            self.class_name = win32gui.GetClassName(self.window_handle)
 
     def coordinate(self, position=None, return_type='dict'):
         keys = ['left', 'top', 'right', 'bottom']

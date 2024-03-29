@@ -9,7 +9,11 @@ def change(author_str):
 
 if __name__ == "__main__":
     text = """
-    Ruiqing Zhang and Chao Pang and Chuanqiang Zhang and Shuohuan Wang and Zhongjun He and Yu Sun and Hua Wu and Haifeng Wang
+    Shulin Liu and Tao Yang and Tianchi Yue and Feng Zhang and Di Wang
+    Zhao Guo and Yuan Ni and Keqiang Wang and Wei Zhu and Guotong Xie
+    Heng-Da Xu and Zhongli Li and Qingyu Zhou and Chao Li and Zizhen Wang and Yunbo Cao and Heyan Huang and Xian-Ling Mao
+    Li Huang and Junjie Li and Weiwei Jiang and Zhiyu Zhang and Minchuan Chen and Shaojun Wang and Jing Xiao
+    
     """
 
     for _line in text.split('\n'):

@@ -24,8 +24,8 @@ python -m grpc_tools.protoc \
     keyvaluestore.proto
 # then you can get keyvaluestore_pb2_grpc and keyvaluestore_pb2
 """
-sys.path.append('../CDMemory/protos/')
-from CDMemory.protos import keyvaluestore_pb2_grpc, keyvaluestore_pb2
+sys.path.append('./protos/')
+from interactive.protos import keyvaluestore_pb2_grpc, keyvaluestore_pb2
 
 
 if __name__ == '__main__':

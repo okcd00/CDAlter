@@ -6,3 +6,4 @@ PyUserInput
 pywin32>=220
 pyyaml
 pyqt5
+wxPython

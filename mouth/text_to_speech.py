@@ -14,7 +14,7 @@ import wave
 import json
 import _thread
 import pyaudio
-import CDMouth.atc as atc
+import utils.atc as atc
 from pathlib import Path
 from pypinyin import lazy_pinyin, TONE3
 from pydub import AudioSegment

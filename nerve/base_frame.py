@@ -30,7 +30,7 @@ class BaseFrame(wx.Frame):
         self.SetStatusText("This is a testing Python GUI program")
 
     def init_icon(self):
-        icon = wx.Icon('res/cd_16x16.ico', wx.BITMAP_TYPE_ICO, 16, 16)
+        icon = wx.Icon('nerve/res/cd_16x16.ico', wx.BITMAP_TYPE_ICO, 16, 16)
         self.SetIcon(icon)
         return icon
 

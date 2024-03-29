@@ -4,3 +4,4 @@ pypinyin
 PyUserInput
 pywin32
 pyyaml
+wxPython

@@ -8,14 +8,14 @@
 #   desc     : Control and make use of all parts.
 #              Only import the packages you need.
 # ==========================================================================
-# from utils import *
-from CDEyes.WindowEye import WindowEye
-from CDHands.KMHand import KMHand
+from utils import *
+from eyes.window_eye import WindowEye
+from hands.key_mouse_hand import KeyMouseHand
 
 
 class CDBrain(object):
-    w_eye = WindowEye()
-    m_hand = KMHand()
+    USE_EYES = {'window_eye': WindowEye()}
+    USE_HANDS = {'key_mouse_hand': KeyMouseHand()}
 
     def __init__(self):
         pass
@@ -29,3 +29,4 @@ class CDBrain(object):
 
 if __name__ == '__main__':
     print("pass")
+    print(PROJECT_PATH)

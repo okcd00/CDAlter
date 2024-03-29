@@ -12,8 +12,8 @@ import time
 
 sys.path.append('../')
 import threading
-from CDEyes.WindowEye import WindowEye
-from CDHands.PUIHand import PUIHand
+from eyes.window_eye import WindowEye
+from hands.pui_hand import PUIHand
 
 
 class BcrAgent(object):

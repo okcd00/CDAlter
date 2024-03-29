@@ -11,7 +11,7 @@ import sys
 sys.path.append('../')
 import random
 import wx.lib.buttons as buttons
-from CDNerve.BaseFrame import wx, BaseFrame
+from nerve.base_frame import wx, BaseFrame
 
 
 class MyFrame(BaseFrame):

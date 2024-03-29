@@ -131,7 +131,8 @@ class TablePet(QWidget):
 
 def show_sniper_marker():
     app = QApplication(sys.argv)
-    myPet = TablePet(pic_uri='CDMemory/pictures/sniper_marker_small_circle.png')
+    sniper_pic_fp = 'memory/pictures/sniper_marker_small_circle.png'
+    myPet = TablePet(pic_uri=sniper_pic_fp)
     sys.exit(app.exec_())
 
 
@@ -142,4 +143,5 @@ def show_desktop_pet():
 
 
 if __name__ == '__main__':
-    show_sniper_marker()
+    # show_sniper_marker()
+    show_desktop_pet()

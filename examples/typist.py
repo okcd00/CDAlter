@@ -13,10 +13,10 @@ import time
 
 sys.path.append('./')
 sys.path.append('../')
-from CDEyes.WindowEye import WindowEye
-from CDHands.PUIHand import PUIHand
-from CDEyes.ReadEye import ReadEye
-from CDMemory.PinyinMemory import PinyinUtils
+from eyes.window_eye import WindowEye
+from hands.pui_hand import PUIHand
+from eyes.read_eye import ReadEye
+from utils.pinyin_utils import PinyinUtils
 
 
 SIGN2IS_TABLE = {
