@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 from configparser import RawConfigParser
 
 
-header_store = [
+USER_AGENT_STORE = [
     "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36",
     "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0",
@@ -47,7 +47,7 @@ class SpiderEye(object):
             # 'Cache-Control': 'no-cache',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'Upgrade-Insecure-Requests': '1',
-            'User-Agent': header_store[-4],
+            'User-Agent': USER_AGENT_STORE[-4],
             'Accept-Encoding': 'gzip, deflate',
             'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7',
         }
