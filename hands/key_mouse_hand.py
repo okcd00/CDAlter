@@ -17,6 +17,7 @@ import win32api
 import win32con
 import win32gui
 from pymouse import PyMouse
+from pynput import keyboard
 from pykeyboard import PyKeyboard
 
 
@@ -109,6 +110,11 @@ class KeyMouseHand_PUI(object):
             return [self.keyboard.numpad_keys[key[3:]]]
         return [key]
 
+    def press_mouse(self, x, y, duration=1.0):
+        self.mouse.press(x, y, 1)
+        time.sleep(duration)
+        self.mouse.release(x, y, 1)
+
     def click(self, x, y, key=1):
         self.mouse.click(x, y, key)
 
@@ -147,5 +153,7 @@ KeyMouseHand = KeyMouseHand_PUI
 if __name__ == '__main__':
     # Windows System
     mh = KeyMouseHand()
-    mh.double_click()
-    mh.keyboard.press_keys(['d'])
+    # mh.double_click()
+    # mh.keyboard.press_keys(['d'])
+    
+    mh.press_mouse(100, 100, 0.5)
