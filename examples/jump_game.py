@@ -13,13 +13,15 @@ import os, sys, time, json
 
 from pymouse import PyMouse
 from pynput import keyboard
-import time
+import math
 
 mouse = PyMouse()
 
 coordinates = {
-    "src": 642,
-    "dest": 0
+    "src_x": 0,
+    "src_y": 0,
+    "dest_x": 0,
+    "dest_y": 0,
 }
 
 def on_press(key):
@@ -28,15 +30,19 @@ def on_press(key):
             x, y = mouse.position()
             print(f"{x=}, {y=}")
 
-            coordinates['src'] = y
+            coordinates['src_x'] = x
+            coordinates['src_y'] = y
 
         if key.char == 'b':
             x, y = mouse.position()
             print(f"{x=}, {y=}")
 
-            coordinates['dest'] = y
-            duration = (coordinates['src'] - coordinates['dest']) * 0.0063
-            print(f"{duration=}")
+            coordinates['dest_x'] = x
+            coordinates['dest_y'] = y
+
+            dist = math.sqrt( ( coordinates['dest_x']-coordinates['src_x'])**2 + ( coordinates['dest_y']-coordinates['src_y'])**2 )
+            duration = dist * 0.0033
+            print(f"[{dist}] {duration=}")
 
             mouse.press(x, y, 1)
             time.sleep(duration)
